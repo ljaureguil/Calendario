@@ -1,0 +1,708 @@
+<html>
+
+
+<style>
+  body{
+   overflow:hidden;
+
+  }
+#todo{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 0;
+   background: #ddd;
+}
+
+/* Images */
+
+.carousel-img {
+ position: absolute;
+  top: 0;
+  bottom: 0;
+   -webkit-transition: opacity ease-out 0.5s;
+  transition: opacity ease-out 0.5s;
+  opacity:0;
+}
+.cimg{
+ 
+  display: block;
+   z-index: 0;
+  opacity:0;
+}
+.cvf{ 
+    position:absolute; //opacity:0;
+ -webkit-transition: opacity ease-out 0.5s;
+  transition: opacity ease-out 0.5s;
+/  -webkit-transition: opacity ease-out 0.5s;
+  transition: opacity ease-out 0.5s;
+ 
+ // object-fit: contain;
+ 
+}
+@keyframes atencion { 
+ 
+  from {opacity:.4;}
+  to {opacity:1;}
+
+}
+
+.carousel-arrow {
+  animation: atencion 1.2s ease-in-out alternate infinite;
+  z-index: 3;
+  display: block;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 45%;
+   border-radius: 50%;
+  border-style:solid;
+  border-color:red;
+   background-image: url("http://res.cloudinary.com/dnqehhgmu/image/upload/v1509720334/blue-arrow_jk1ydw.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 16px 16px;
+  cursor: pointer;
+  -webkit-transition: background-size 0.15s ease-out;
+  transition: background-size 0.15s ease-out;
+  opacity: .5;
+}
+
+.carousel-arrow:hover,
+.carousel-arrow:focus {
+  background-size: 22px 22px;
+}
+
+.carousel-arrow-next {
+  right: 20px;
+}
+
+.carousel-arrow-prev {
+  left: 20px;
+  -webkit-transform: rotateZ(180deg);
+  -ms-transform: rotate(180deg);
+  transform: rotateZ(180deg);
+}
+#swimgs{background:url(data:image/jpeg;base64,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);
+background-size:100% 100%;
+  width: 100%;
+  height:100%;
+
+ // text-align: center;
+ width:100%;
+ height:100%;
+}
+#fctemplate{
+    
+}
+</style>
+ <body>
+
+      <button type="button" id="carousel-arrow-prev" class="carousel-arrow carousel-arrow-prev" arial-label="Image précédente" onclick="back()"></button>
+          <button type="button" id="carousel-arrow-next" class="carousel-arrow carousel-arrow-next" arial-label="Image suivante" onclick="next()"></button>
+
+      <div id="swimgs">    
+      </div>
+      <script>
+        // Get all users
+       
+
+        function GetAllJ(url,callback) {
+            
+        //var url  = "http://localhost:8080/api/v1/users";
+        var xhr  = new XMLHttpRequest()
+        xhr.open('GET', url, true)
+        xhr.onload = function () {
+          var users = JSON.parse(xhr.responseText);
+          if (xhr.readyState == 4 && xhr.status == "200") {
+            console.table(users);
+          } else {
+            console.error(users);
+          }
+        }
+        xhr.send(null);
+        }
+        
+        // Get a user
+        function GetJ(url,callback) {
+            
+        //var url  = "http://localhost:8080/api/v1/users";
+        var xhr  = new XMLHttpRequest()
+        xhr.open('GET', url+'/1', true)
+        xhr.onload = function () {
+          var users = JSON.parse(xhr.responseText);
+          if (xhr.readyState == 4 && xhr.status == "200") {
+          //	console.table(users);
+          callback(users);
+          } else {
+            console.error(users);
+          }
+        }
+        xhr.send(null);
+        }
+        
+        // Post a user
+        function PostJ(url,ob,callback) {
+        //var url = "http://localhost:8080/api/v1/users";
+        
+        var data = {};
+   //     data.firstname = "John";
+     //   data.lastname  = "Snow";
+        var json = JSON.stringify(data);
+        
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+        xhr.onload = function () {
+          var users = JSON.parse(xhr.responseText);
+          if (xhr.readyState == 4 && xhr.status == "201") {
+            console.table(users);
+          } else {
+            console.error(users);
+          }
+        }
+        xhr.send(json);
+        }
+        
+        // Update a user
+        function UpdateJ(url,ob,callback) {
+            var json = JSON.stringify(ob);//JSON.stringify(data);
+        //alert("this will be sent: \n\n"+otot(ob))
+        var xhr = new XMLHttpRequest();
+        xhr.open("PUT", url+'/12', true);
+        xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+        xhr.onload = function () {
+          var users = JSON.parse(xhr.responseText);
+          if (xhr.readyState == 4 && xhr.status == "200") {
+          //  alert("Done...\n\nWait a few seconds and press refresh to check changes.")
+        //	callback(users);
+          } else {
+            console.error(users);
+          }
+        }
+        xhr.send(json);
+        }
+        
+        // Delete a user
+        function PostJ(url,callback) {
+        //var url = "http://localhost:8080/api/v1/users";
+        var xhr = new XMLHttpRequest();
+        xhr.open("DELETE", url+'/12', true);
+        xhr.onload = function () {
+          var users = JSON.parse(xhr.responseText);
+          if (xhr.readyState == 4 && xhr.status == "200") {
+            console.table(users);
+          } else {
+            console.error(users);
+          }
+        }
+        xhr.send(null);
+        }
+        </script>
+        
+<script>
+// main: https://jsonblob.com/e17b5980-1d62-11eb-ab21-2fc49933500c
+//    var w = window.screen.availWidth;//window.innerWidth;//cont.offsetWidth; //
+//    var h = window.screen.availHeight//window.innerHeight;//cont.offsetHeight; //
+ var arn="a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,y,z,_,0,1,2,3,4,5,6,7,8,9,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,x,y,z,_,0,1,2,3,4,5,6,7,8,9";
+ arn=arn.split(",");
+//alert(arn.length)
+// localStorage.removeItem("ind");
+ /////////////
+
+  d = new Date();
+   n = d.toString();
+   var nameid=""
+  n=n.split(" GMT")[0];
+ // alert(n)
+var asw=localStorage.getItem("ind");
+
+GetJ("https://jsonblob.com/api/e17b5980-1d62-11eb-ab21-2fc49933500c",function(r){
+var na=n+"-"+r.counter;
+
+var nn=arn[d.getMonth()*1]+arn[d.getHours()*1]+arn[d.getMinutes()]+arn[d.getSeconds()]+"-"+r.counter;
+if(asw===null){
+
+r.visitas.push({"fecha":na,"name":nn});
+r.counter=r.visitas.length;
+r.users.push({"user":nn,"visitas":[na],"counter":1});
+r.nusers=r.users.length;
+UpdateJ("https://jsonblob.com/api/e17b5980-1d62-11eb-ab21-2fc49933500c",r);
+localStorage.setItem("ind",nn);
+}
+else{
+//    var na=n+"-"+r.counter;
+    var c=false;
+ // alert("no "+asw);
+    r.visitas.push({"fecha":na,"name":asw});
+    r.counter=r.visitas.length;
+    var i=0;
+    for(i=0;i<r.users.length;i++){
+         if(r.users[i].user===asw){
+          //  alert("si esta registrado... "+r.users[i].user)
+            r.users[i].visitas.push(na);
+            r.users[i].counter=r.users[i].visitas.length; 
+           
+            i=r.users.length;
+                c=true;
+               UpdateJ("https://jsonblob.com/api/e17b5980-1d62-11eb-ab21-2fc49933500c",r)
+        }
+  
+    }
+       if(!c){
+ localStorage.removeItem("ind");
+r.users.push({"user":nn,"visitas":[na],"counter":1});
+r.nusers=r.users.length;
+UpdateJ("https://jsonblob.com/api/e17b5980-1d62-11eb-ab21-2fc49933500c",r);
+
+localStorage.setItem("ind",nn);
+        }
+}
+});
+    esw=document.getElementById("swimgs");
+var arlinks=[];
+var arim=[];
+var w = window.innerWidth;//esw.offsetWidth;////
+var h = window.innerHeight;//esw.offsetHeight;//
+ //  alert(h+"\n\n"+w);
+var ro=w/h;
+ //alert(esw.clientWidth+"\n\n"+w);
+
+ /////////////////////////////////////////////////
+loadDoc("https://raw.githubusercontent.com/ljaureguil/Comando-Unico/master/newslinks.txt", function(r) {
+    arlinks = r.split("\n"); //alert(arlinks);
+    arlinks.forEach(function(item, index) {
+        var con = document.createElement("div");
+       
+        con.setAttribute("class", "cvf");//cimg carousel-img
+        var content = "";
+        //
+        if (item.includes("iframe")) {
+                arim.push(con);
+            item = item.replace('<iframe', '<iframe id="ifr_' + index + '"class="cvf"  onload=bestFit(esw,this)');//class="cvf"  onload=bestFit(esw,this)
+            con.innerHTML += item;
+         var id="ifr_"+index;
+             esw.appendChild(con);
+             con.style.opacity=0;
+          
+        }
+        if (item.includes("https://scontent-")) {
+            var im = document.createElement("img");
+            im.style.opacity=0;
+                  arim.push(im);
+            im.src = item;
+            esw.appendChild(im);
+            im.onload=function(){
+             //   var ri=im.naturalWidth/im.naturalHeight;
+   im.setAttribute("class", "cimg carousel-img"); //mg carousel-img'>")
+   bestFit(esw,im)
+     
+                    }
+        }
+      //  alert(item)
+        if(item.includes("https://raw.githubusercontent.com")){
+            
+            q=document.createElement("iframe");
+            q.setAttribute("src",item);
+            q.setAttribute("class","cvf);
+             esw.appendChild(q);
+            
+      /*      
+            loadDoc(item,function(dc){
+                
+                var ir=document.createElement("iframe");
+                ir.setAttribute("class","cvf");
+                ir.onload=function(){
+        alert(ir.contentDocument);
+var ifrm = ir.contentWindow// || ir.contentDocument.document || ir.contentDocument;
+ifrm.document.open();
+ifrm.document.write(dc);
+ifrm.document.close();
+                esw.appendChild(ir);
+                }
+                
+  
+                })*/
+        }
+    })
+});
+function bestFit(cont, e) {
+    var we = e.offsetWidth; //.naturalWidth;
+    var he = e.offsetHeight; //.naturalHeight;//
+    var ra = w / we;
+    ra = w / we;
+    var hh = he * ra,
+        ww = we * ra;
+    if (hh > h) {
+        ra = h / he;
+        ww = we * ra;
+        hh = he * ra;
+    }
+    e.width = ww;
+    e.height = hh;
+    e.style.left=(w-ww)/2;
+    e.style.top=(h-hh)/2
+}
+ var record=1;
+setTimeout("back();",2000);
+//// Facebook page go get video
+
+function back(){
+    arim[record].style.opacity=0;arim[record].style.zIndex=0;
+  record--;
+  if(record<0) record=arim.length-1;
+    arim[record].style.opacity=1;arim[record].style.zIndex=1;
+ //alert(record)
+}
+
+function next(){
+ // alert(arim.length)
+  arim[record].style.opacity=0; arim[record].style.zIndex=0;
+  record++;
+  if(record===arim.length) record=0;
+  arim[record].style.opacity=1;arim[record].style.zIndex=1;
+// alert(record)
+}
+
+function loadDoc(url,callback) {
+  var xhttp = new XMLHttpRequest();
+  
+  xhttp.open("GET", url, false);
+  xhttp.send();
+callback(xhttp.responseText);
+
+}
+
+</script>
+
+</body>
+</html>
+
+/*
+{
+  "main": {
+    "shopdesc": "kjso-37",
+    "droid": "kmrm-42",
+    "phone": "b"
+  },
+  "visitas": [],
+  "users": [],
+  "counter": 0,
+  "nusers": 0
+}
+
+
+{
+  "main": {},
+  "visitas": [
+    {
+      "fecha": "Wed Nov 04 2020 20:40:51 GMT-0800 (PST)",
+      "name": "Wed Nov 04 2020 20:40:51 GMT-0800 (PST)@11"
+    },
+    {
+      "fecha": "Wed Nov 04 2020 22:36:42 GMT-0800 (PST)",
+      "name": "Wed Nov 04 2020 22:36:42 GMT-0800 (PST)@13"
+    }],
+  "users": [
+    {
+      "user": "Wed Nov 04 2020 20:40:51 GMT-0800 (PST)@11",
+      "visitas": [
+        "Wed Nov 04 2020 20:40:51 GMT-0800 (PST)"
+      ],
+      "counter": 1
+    },
+    {
+      "user": "Wed Nov 04 2020 22:36:42 GMT-0800 (PST)@13",
+      "visitas": [
+        "Wed Nov 04 2020 22:36:42 GMT-0800 (PST)"
+      ],
+      "counter": 1
+    }
+ 
+  ],
+  "counter": 2,
+  "nusers": 2
+}
+
+
+
+
+{
+  "main": {},
+  "visitas": [
+    {
+      "fecha": "Wed Nov 04 2020 20:40:51 GMT-0800 (PST)",
+      "name": "Wed Nov 04 2020 20:40:51 GMT-0800 (PST)@11"
+    },
+    {
+      "fecha": "Wed Nov 04 2020 22:36:42 GMT-0800 (PST)",
+      "name": "Wed Nov 04 2020 22:36:42 GMT-0800 (PST)@13"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 12:48:27-2",
+      "name": "Thu Nov 05 2020 12:39:14-4"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 12:49:32-3",
+      "name": "Thu Nov 05 2020 12:48:27-2"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 12:50:20-4",
+      "name": "Thu Nov 05 2020 12:38:08-2"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 12:51:17-5",
+      "name": "Thu Nov 05 2020 12:50:20-4"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 13:03:27-6",
+      "name": "Thu Nov 05 2020 10:13:07 GMT-0800 (Pacific Standard Time)@6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 13:18:42-7",
+      "name": "Thu Nov 05 2020 13:18:42-7"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 13:27:56-8",
+      "name": "Thu Nov 05 2020 12:50:20-4"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:18:52-9",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:19:31-10",
+      "name": "Thu Nov 05 2020 14:19:31-10"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:20:11-11",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:20:24-12",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:20:36-13",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:22:02-14",
+      "name": "Thu Nov 05 2020 14:22:02-14"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:22:08-15",
+      "name": "Thu Nov 05 2020 14:22:08-15"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:42:11-16",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:42:22-17",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:42:28-18",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:43:14-19",
+      "name": "Thu Nov 05 2020 14:43:14-19"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:44:30-20",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:45:11-21",
+      "name": "Thu Nov 05 2020 12:50:20-4"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:45:23-22",
+      "name": "Thu Nov 05 2020 12:50:20-4"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:45:46-23",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:45:51-24",
+      "name": "Thu Nov 05 2020 12:50:20-4"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:53:23-25",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:53:29-26",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:59:22-27",
+      "name": "Thu Nov 05 2020 12:48:27-2"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 14:59:50-28",
+      "name": "Thu Nov 05 2020 12:48:27-2"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 15:55:44-29",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 15:56:10-30",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 16:50:03-31",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 18:55:46-32",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 21:37:33-33",
+      "name": "Thu Nov 05 2020 21:37:33-33"
+    },
+    {
+      "fecha": "Thu Nov 05 2020 21:39:06-34",
+      "name": "Thu Nov 05 2020 21:39:06-34"
+    },
+    {
+      "fecha": "Fri Nov 06 2020 06:27:55-35",
+      "name": "Thu Nov 05 2020 13:03:27-6"
+    },
+    {
+      "fecha": "Fri Nov 06 2020 09:21:27-36",
+      "name": "Thu Nov 05 2020 12:50:20-4"
+    }
+  ],
+  "users": [
+    {
+      "user": "Wed Nov 04 2020 20:40:51 GMT-0800 (PST)@11",
+      "visitas": [
+        "Wed Nov 04 2020 20:40:51 GMT-0800 (PST)"
+      ],
+      "counter": 1
+    },
+    {
+      "user": "Wed Nov 04 2020 22:36:42 GMT-0800 (PST)@13",
+      "visitas": [
+        "Wed Nov 04 2020 22:36:42 GMT-0800 (PST)"
+      ],
+      "counter": 1
+    },
+    {
+      "user": "Thu Nov 05 2020 12:48:27-2",
+      "visitas": [
+        "Thu Nov 05 2020 12:48:27-2",
+        "Thu Nov 05 2020 12:49:32-3",
+        "Thu Nov 05 2020 14:59:22-27",
+        "Thu Nov 05 2020 14:59:50-28"
+      ],
+      "counter": 4
+    },
+    {
+      "user": "Thu Nov 05 2020 12:50:20-4",
+      "visitas": [
+        "Thu Nov 05 2020 12:50:20-4",
+        "Thu Nov 05 2020 12:51:17-5",
+        "Thu Nov 05 2020 13:27:56-8",
+        "Thu Nov 05 2020 14:45:11-21",
+        "Thu Nov 05 2020 14:45:23-22",
+        "Thu Nov 05 2020 14:45:51-24",
+        "Fri Nov 06 2020 09:21:27-36"
+      ],
+      "counter": 7
+    },
+    {
+      "user": "Thu Nov 05 2020 13:03:27-6",
+      "visitas": [
+        "Thu Nov 05 2020 13:03:27-6",
+        "Thu Nov 05 2020 14:18:52-9",
+        "Thu Nov 05 2020 14:20:11-11",
+        "Thu Nov 05 2020 14:20:24-12",
+        "Thu Nov 05 2020 14:20:36-13",
+        "Thu Nov 05 2020 14:42:11-16",
+        "Thu Nov 05 2020 14:42:22-17",
+        "Thu Nov 05 2020 14:42:28-18",
+        "Thu Nov 05 2020 14:44:30-20",
+        "Thu Nov 05 2020 14:45:46-23",
+        "Thu Nov 05 2020 14:53:23-25",
+        "Thu Nov 05 2020 14:53:29-26",
+        "Thu Nov 05 2020 15:55:44-29",
+        "Thu Nov 05 2020 15:56:10-30",
+        "Thu Nov 05 2020 16:50:03-31",
+        "Thu Nov 05 2020 18:55:46-32",
+        "Fri Nov 06 2020 06:27:55-35"
+      ],
+      "counter": 17
+    },
+    {
+      "user": "Thu Nov 05 2020 13:18:42-7",
+      "visitas": [
+        "Thu Nov 05 2020 13:18:42-7"
+      ],
+      "counter": 1
+    },
+    {
+      "user": "Thu Nov 05 2020 14:19:31-10",
+      "visitas": [
+        "Thu Nov 05 2020 14:19:31-10"
+      ],
+      "counter": 1
+    },
+    {
+      "user": "Thu Nov 05 2020 14:22:02-14",
+      "visitas": [
+        "Thu Nov 05 2020 14:22:02-14"
+      ],
+      "counter": 1
+    },
+    {
+      "user": "Thu Nov 05 2020 14:22:08-15",
+      "visitas": [
+        "Thu Nov 05 2020 14:22:08-15"
+      ],
+      "counter": 1
+    },
+    {
+      "user": "Thu Nov 05 2020 14:43:14-19",
+      "visitas": [
+        "Thu Nov 05 2020 14:43:14-19"
+      ],
+      "counter": 1
+    },
+    {
+      "user": "Thu Nov 05 2020 21:37:33-33",
+      "visitas": [
+        "Thu Nov 05 2020 21:37:33-33"
+      ],
+      "counter": 1
+    },
+    {
+      "user": "Thu Nov 05 2020 21:39:06-34",
+      "visitas": [
+        "Thu Nov 05 2020 21:39:06-34"
+      ],
+      "counter": 1
+    }
+  ],
+  "counter": 37,
+  "nusers": 12
+}
+
+
+
+
+*/
+</script>
+
+</body>
+</html>
