@@ -1,4 +1,5 @@
 
+
 <html>
     <body>
     <style>
@@ -14,7 +15,7 @@
         width:100px;
         height:100px;
         background:rgba(0,0,0,.6);
-        border-radius:200px;
+        border-radius:20px;
        }
     #todo{
         position:relative;
@@ -126,7 +127,6 @@ d.setDate(v);//d.getDate() + v-d.getDate()
     }
  
       } 
-      setMonth(month);
       function next(){
           month++;
           if(month==13){
@@ -166,50 +166,12 @@ function setMonth(n){
   // alert(s)
             ard[i].innerHTML=s;
             
-         
-            
-
+  
         }
 
  
 }
   
-
-
-
-  /*
-  function setMonth(n){
-    for(c=0;c<5;c++){
-        for(r=0;r<7;r++){
-            b=document.createElement("button");
-            v++;
-            b.id="c"+v;   
-   
-              b.setAttribute("class","cdias");
-              b.style.width=sw+"px";
-              b.style.height=sh+"px";
-              b.style.top=(m*(1+c)+sh*c)+"px";
-              b.style.left= (m*(1+r)+sw*r)+"px";
-   
-              var d = new Date();
-d.setDate(v);//d.getDate() + v-d.getDate()
-    var s=d.toString().split((" "))
-            b.innerHTML=s[2]; //  s[1]+"<br>"+   
-            b.value=d;
-          if(ac===d.getDate()) b.style.background="rgba(50,250,50,.76)";
-            ard.push(b) 
-             b.addEventListener("click", function(){
-  alert(this.value);
-             });
-            et.appendChild(b);
-    }
- 
-      }
-
-}
-  
-  
-  */
     
     </script>
     <body>
