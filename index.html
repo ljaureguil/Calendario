@@ -71,6 +71,44 @@
         border:none;
     
     }
+    #info{  
+        overflow:hidden;
+   
+          color:white;
+        background: rgba(0,0,0,.6);
+        position:absolute;
+        top:10%;
+        left:10%;
+        z-index: 1;
+        width:80%;
+        height: 65%;
+        display: none;
+     border-style:double;
+    }
+    #tinfo{
+        color:white;
+      width:90%;
+      height: 35%;
+      margin: 5%;
+      background: rgba(0,0,0,.6);
+
+    }
+    #conf{
+        color:white
+        margin: 10px;
+        display: none;
+        overflow:hidden;
+   font-size: 30px;
+   color:white;
+ background: rgba(0,0,0,.6);
+ position:absolute;
+ top:10%;
+ left:10%;
+ z-index: 1;
+ width:80%;
+ 
+border-style:double;
+    }
     </style>
     <div id="top">
           <button id="bnext" class="ctrls" onclick="next()">NEXT</button>
@@ -81,9 +119,29 @@
 
     <div id="todo">
    <div id="dt"></div>
+ 
+  <div id="info">
+       <p id="msg"> Si quieres apartar esta fecha porfavor deja tus datos y te contactaremos, o sino habla al (209) 665 8321</p>
+        <textarea id="tinfo" placeholder="Deja tu informacion aqui..."></textarea>
+        <button id="bsend"  onclick="sendInfo();einfo.style.display='none';econf.style.display='none'">Mandar Informacion</button>
+        <button onclick="einfo.style.display='none';econf.style.display='none'">Salir</button>"
+    </div>
+    <div id="conf">
+        <button class="cde" onclick="einfo.style.display='none';econf.style.display='none'">No</button>
+             <button class="cde" onclick="econf.style.display='none';einfo.style.display='block'">Yes</button>
     </div>
     
-    <script> 
+
+  </div>
+ 
+  <script id="ss"></script>
+    <script>
+    // https://jsonblob.com/8f47c124-2c42-11eb-935b-f1e9d15679db
+    
+ //   loadDoc("https://raw.githubusercontent.com/ljaureguil/MyLib/master/jsondials.js",function(r){document.getElementById("ss").innerHTML=r});;
+     etinfo=document.getElementById("tinfo");
+             einfo=document.getElementById("info");
+         econf=document.getElementById("conf");
         edt=document.getElementById("dt");
       et=document.getElementById("todo");
         emonth=document.getElementById("dmonth");
@@ -140,7 +198,7 @@ d.setDate(v);//d.getDate() + v-d.getDate()
           if(ac===d.getDate()) b.style.background="rgba(50,250,50,.76)";
             ard.push(b) 
              b.addEventListener("click", function(){
- var ccc=prompt("quieres apartar fecha este dia?"+this.value);
+                econf.style.display='block';
              });
             et.appendChild(b);
     }
@@ -185,15 +243,47 @@ function setMonth(n){
         var s=d.getDate();//meses[d.getMonth()]+"<br>+"+
   // alert(s)
             ard[i].innerHTML=s;
-            
-         
-            
-
+ 
         }
 
  
 }
+function sendInfo() {
+    alert(etinfo.value)
+
+    GetJ("https://jsonblob.com/api/8f47c124-2c42-11eb-935b-f1e9d15679db",function(o){
+     alert(o)
+
+
+    })
+}
+
+function loadDoc(url,callback) {
+  var xhttp = new XMLHttpRequest();
   
+  xhttp.open("GET", url, false);
+  xhttp.send();
+callback(xhttp.responseText);
+
+}
+
+  function GetJ(url,callback) {
+            
+        //var url  = "http://localhost:8080/api/v1/users";
+        var xhr  = new XMLHttpRequest()
+        xhr.open('GET', url+'/1', true)
+        xhr.onload = function () {
+            alert(xhr.responseText)
+          var users = JSON.parse(xhr.responseText);
+          if (xhr.readyState == 4 && xhr.status == "200") {
+          //	console.table(users);
+          callback(users);
+          } else {
+            console.error(users);
+          }
+        }
+        xhr.send(null);
+        }
 
     </script>
     <body>
